@@ -1,7 +1,15 @@
-import { Heading } from '@chakra-ui/react'
+"use client"
+import Header from '@/app/lib/components/Header'
+import SearchForm from '@/app/lib/components/SearchForm'
+import { Box } from '@chakra-ui/react'
 
-export default function Home() {
+const Page = () => {
   return (
-    <Heading>Hello, World!</Heading>
+    <Box>
+      <Header />
+      <SearchForm />
+    </Box>
   )
 }
+
+export default Page
