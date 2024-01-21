@@ -10,7 +10,7 @@ const Home = () => {
   const [users, setUsers] = useState([])
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetch('https://users.ktrnds.com/api/users')
+      const response = await fetch('http://133.18.202.177:3000/api/users')
       const data = await response.json()
       setUsers(data)
     }
