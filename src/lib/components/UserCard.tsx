@@ -26,14 +26,17 @@ export const UserCard: React.FC<{
       overflow="hidden"
       variant="outline"
       m={3}
+      as={"a"}
+      href={`/users/${user.user_id}`}
     >
-      <HStack p={3} height={90}>
+      <HStack p={0} height={90} m={3}>
         <Avatar size="lg" name={user.displayName} src={user.avatarURL} m={2} />
         <VStack alignItems={'flex-start'}>
-          <Text color={'gray.500'}>
+          <Text color={'gray.500'} m={0} p={0}>
             {user.displayName}({user.username})
           </Text>
-          <Text color={'gray.500'}>{user.user_id}</Text>
+          <Text color={'gray.500'} m={0} p={0}>{user.user_id}</Text>
+          <Text m={0} p={0}>理由: {user.reason}</Text>
         </VStack>
       </HStack>
       <Spacer />
