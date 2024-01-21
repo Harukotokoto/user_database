@@ -10,15 +10,17 @@ import {
   VStack,
 } from '@chakra-ui/react'
 
+export type UserType = {
+  avatarURL: string;
+  displayName: string;
+  username: string;
+  user_id: string;
+  reason: string;
+  categories: string[];
+}
+
 export const UserCard: React.FC<{
-  user: {
-    avatarURL: string
-    displayName: string
-    username: string
-    user_id: string
-    reason: string
-    categories: string[]
-  }
+  user: UserType
 }> = ({ user }) => {
   return (
     <Card

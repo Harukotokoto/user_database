@@ -4,9 +4,9 @@ import { Box, InputGroup } from '@chakra-ui/react'
 import { Input, InputLeftElement } from '@chakra-ui/input'
 import { SearchIcon } from '@chakra-ui/icons'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { UserCard } from '@/lib/components/UserCard'
+import { UserCard, UserType } from '@/lib/components/UserCard'
 
-export default function Home() {
+export default async function Home() {
   const [search, setSearch] = useState('')
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,35 +15,9 @@ export default function Home() {
 
   useEffect(() => {}, [search])
 
-  const users = [
-    {
-      avatarURL:
-        'https://cdn.discordapp.com/avatars/1176812229631430660/7974a7d98fba5170fb93a42a355bced7.png',
-      displayName: 'たっくん',
-      username: 'admintakkun413',
-      user_id: '1176812229631430660',
-      reason: 'ハゲ',
-      categories: ['ハゲ', 'くちくさい'],
-    },
-    {
-      avatarURL:
-        'https://cdn.discordapp.com/avatars/1176812229631430660/7974a7d98fba5170fb93a42a355bced7.png',
-      displayName: 'たっくん',
-      username: 'admintakkun413',
-      user_id: '1176812229631430660',
-      reason: 'ハゲ',
-      categories: ['ハゲ', 'くちくさい'],
-    },
-    {
-      avatarURL:
-        'https://cdn.discordapp.com/avatars/1176812229631430660/7974a7d98fba5170fb93a42a355bced7.png',
-      displayName: 'たっくん',
-      username: 'admintakkun413',
-      user_id: '1176812229631430660',
-      reason: 'ハゲ',
-      categories: ['ハゲ', 'くちくさい'],
-    },
-  ]
+  const response= await fetch('http://localhost:3000/api/users')
+
+  const users = await response.json()
 
   return (
     <Box>
@@ -61,8 +35,8 @@ export default function Home() {
         </InputGroup>
       </Box>
       <Box margin={5}>
-        {users.map((user) => (
-          <UserCard user={user} />
+        {users.map((user: UserType, index: number) => (
+          <UserCard key={index} user={user} />
         ))}
       </Box>
     </Box>
