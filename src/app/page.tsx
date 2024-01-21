@@ -1,44 +1,47 @@
 'use client'
+import React, { useState, useEffect } from 'react'
 import Header from '@/lib/components/Header'
-import { Box, InputGroup } from '@chakra-ui/react'
+import { Box, Center, Heading, InputGroup } from '@chakra-ui/react'
 import { Input, InputLeftElement } from '@chakra-ui/input'
 import { SearchIcon } from '@chakra-ui/icons'
-import { ChangeEvent, useEffect, useState } from 'react'
 import { UserCard, UserType } from '@/lib/components/UserCard'
 
-export default function Home() {
-  const [search, setSearch] = useState('')
+const Home = () => {
+  const [users, setUsers] = useState([])
+  useEffect(() => {
+    const getUsers = async () => {
+      const response = await fetch('http://localhost:3000/api/users')
+      const data = await response.json()
+      setUsers(data)
+    }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value)
-  }
+    getUsers()
+  }, [])
 
-  useEffect(() => {}, [search])
-
-  fetch('http://localhost:3000/api/users').then(async (response) => {
-    const users = await response.json()
-
-    return (
-      <Box>
-        <Header />
-        <Box margin={5}>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none">
-              <SearchIcon color="gray.300" />
-            </InputLeftElement>
-            <Input
-              variant="flushed"
-              placeholder="ユーザー名またはIDで検索"
-              onChange={(e) => handleChange(e)}
-            />
-          </InputGroup>
-        </Box>
-        <Box margin={5}>
-          {users.map((user: UserType, index: number) => (
-            <UserCard key={index} user={user} />
-          ))}
-        </Box>
+  return !users ? (
+    <Box>
+      <Center m={10}>
+        <Heading m={10}>読み込み中...</Heading>
+      </Center>
+    </Box>
+  ) : (
+    <Box>
+      <Header />
+      <Box margin={5}>
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <SearchIcon color="gray.300" />
+          </InputLeftElement>
+          <Input variant="flushed" placeholder="ユーザー名またはIDで検索" />
+        </InputGroup>
       </Box>
-    )
-  })
+      <Box margin={5}>
+        {users.map((user: UserType, index: number) => (
+          <UserCard key={index} user={user} />
+        ))}
+      </Box>
+    </Box>
+  )
 }
+
+export default Home
